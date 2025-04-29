@@ -11,6 +11,9 @@ const inter = Inter({ subsets: ['latin'] });
 export const metadata: Metadata = {
   title: 'MomsLove - Celebrating Motherhood',
   description: 'A platform dedicated to celebrating mothers, sharing stories, and providing resources for maternal wellbeing.',
+  icons: {
+    icon: '/favicon.ico', 
+  },
 };
 
 export default function RootLayout({

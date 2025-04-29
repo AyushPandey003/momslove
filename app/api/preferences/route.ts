@@ -20,7 +20,7 @@ export async function GET() {
 
   try {
     const result = await pool.query(
-      'SELECT categorySlug FROM user_preferences WHERE user_id = $1',
+      'SELECT "category_slug" FROM user_preferences WHERE user_id = $1',
       [userId]
     );
 
@@ -68,7 +68,7 @@ export async function POST(request: Request) {
     if (preferences.length > 0) {
       const values = preferences.map((_, i) => `($1, $${i + 2})`).join(',');
       const queryParams = [userId, ...preferences];
-      const insertQuery = `INSERT INTO user_preferences (user_id, categorySlug) VALUES ${values}`;
+      const insertQuery = `INSERT INTO user_preferences (user_id, category_slug) VALUES ${values}`;
       await client.query(insertQuery, queryParams);
     }
 

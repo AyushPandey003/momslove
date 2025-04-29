@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { ThemeToggle } from '@/app/components/ui/ThemeToggle';
+// import { ThemeToggle } from '@/app/components/ui/ThemeToggle';
 import LoginButton from '@/app/components/auth/LoginButton';
 import LogoutButton from '@/app/components/auth/LogoutButton';
 import type { Session } from 'next-auth'; // Import Session type
@@ -18,7 +18,7 @@ export default function MobileMenu({ navigation, session }: MobileMenuProps) {
 
   return (
     <div className="flex md:hidden">
-      <ThemeToggle />
+      {/* <ThemeToggle /> */}
       <button
         type="button"
         className="ml-2 inline-flex items-center justify-center rounded-md p-2 text-gray-700 hover:bg-gray-100 hover:text-pink-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-pink-500 dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:text-pink-400"

@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { cn } from '../../lib/utils';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'default' | 'outline' | 'ghost' | 'link';
+  variant?: 'default' | 'outline' | 'ghost' | 'link' | 'destructive'; // Add 'destructive' variant
   size?: 'default' | 'sm' | 'lg' | 'icon';
   href?: string;
   className?: string;
@@ -18,7 +18,8 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       default: 'bg-pink-600 text-white hover:bg-pink-700 dark:bg-pink-700 dark:hover:bg-pink-600',
       outline: 'border border-gray-300 bg-transparent hover:bg-gray-100 text-gray-700 dark:text-gray-300 dark:border-gray-600 dark:hover:bg-gray-800',
       ghost: 'hover:bg-gray-100 hover:text-gray-900 dark:hover:bg-gray-800 dark:hover:text-gray-50 data-[state=open]:bg-transparent',
-      link: 'text-pink-600 underline-offset-4 hover:underline dark:text-pink-400'
+      link: 'text-pink-600 underline-offset-4 hover:underline dark:text-pink-400',
+      destructive: 'bg-red-600 text-white hover:bg-red-700 dark:bg-red-700 dark:hover:bg-red-600' // Add destructive styles
     };
     
     const sizes = {
@@ -55,4 +56,4 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   }
 );
 
-Button.displayName = 'Button'; 
+Button.displayName = 'Button';

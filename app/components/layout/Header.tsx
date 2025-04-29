@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { ThemeToggle } from '@/app/components/ui/ThemeToggle';
+// import { ThemeToggle } from '@/app/components/ui/ThemeToggle';
 import { auth } from '@/auth'; // Import server-side auth
 import LoginButton from '@/app/components/auth/LoginButton';
 import LogoutButton from '@/app/components/auth/LogoutButton';
@@ -62,7 +62,7 @@ export default async function Header() {
 
              {/* Desktop Auth Buttons & Theme Toggle */}
              <div className="flex items-center gap-x-4">
-                <ThemeToggle />
+                {/* <ThemeToggle /> */}
                 {user ? (
                   <LogoutButton userName={user.name} userImage={user.image} />
                 ) : (

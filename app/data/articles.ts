@@ -54,7 +54,7 @@ const articles: Article[] = [
       <p>"What surprised me most was how each phase passes so quickly," notes first-time mother Aisha Williams. "Just when I thought I had figured out my baby's patterns, everything would change!"</p>
       <p>Beyond the practical aspects, we also address the emotional journey of new motherhood, including strategies for managing anxiety, dealing with conflicting advice, and nurturing your relationship with your partner during this time of transition.</p>
     `,
-    coverImage: '/images/articles/first-year.jpg',
+    coverImage: '/images/articles/photo1.avif',
     date: '2023-02-10',
     author: {
       name: 'Dr. Lisa Chen',
@@ -75,7 +75,7 @@ const articles: Article[] = [
       <p>"Resilience isn't about being stoic or never struggling," explains child psychologist Dr. Michael Rivera. "It's about having the tools to work through difficulties and the confidence that you can handle whatever comes your way."</p>
       <p>From practical exercises that build a growth mindset to everyday interactions that foster emotional regulation, this guide helps parents intentionally cultivate resilience from toddlerhood through the teen years.</p>
     `,
-    coverImage: '/images/articles/resilient-children.jpg',
+    coverImage: '/images/articles/photo2.avif',
     date: '2023-01-18',
     author: {
       name: 'James Wilson',
@@ -96,7 +96,7 @@ const articles: Article[] = [
       <p>"Abandoning the idea of perfect balance was liberating," shares tech executive and mother of three, Dina Rodriguez. "Instead of separating my identities as 'professional' and 'mom,' I found ways to bring my whole self to both roles."</p>
       <p>From negotiating flexible work arrangements to building support systems and setting boundaries around technology, this guide offers actionable strategies for reducing stress and increasing satisfaction in both domains.</p>
     `,
-    coverImage: '/images/articles/work-life.jpg',
+    coverImage: '/images/articles/photo3.avif',
     date: '2022-12-12',
     author: {
       name: 'Tasha Brooks',

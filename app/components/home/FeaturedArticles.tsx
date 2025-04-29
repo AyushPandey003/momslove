@@ -22,7 +22,7 @@ async function getUserPreferences(userId: string): Promise<string[]> {
 
   try {
     const result = await pool.query(
-      'SELECT "categorySlug" FROM "user_preferences" WHERE "user_id" = $1',
+      'SELECT category_slug FROM "user_preferences" WHERE "user_id" = $1',
       [userId]
     );
     // Ensure pool is closed after query if not using a shared pool instance

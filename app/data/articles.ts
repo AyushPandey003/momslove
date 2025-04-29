@@ -16,7 +16,7 @@ const articles: Article[] = [
     date: '2023-04-15',
     author: {
       name: 'Emily Parker',
-      image: '/images/authors/emily-parker.jpg',
+      image: '/images/authors/profileblog.jpg',
       bio: 'Emily is a parenting coach and mother of two who writes about the joys and challenges of modern motherhood.'
     },
     category: 'personal-stories',
@@ -37,7 +37,7 @@ const articles: Article[] = [
     date: '2023-03-28',
     author: {
       name: 'Sarah Johnson',
-      image: '/images/authors/sarah-johnson.jpg',
+      image: '/images/authors/profileblog.jpg',
       bio: 'Sarah is a wellness expert specializing in maternal health and self-care.'
     },
     category: 'health-wellness',
@@ -58,7 +58,7 @@ const articles: Article[] = [
     date: '2023-02-10',
     author: {
       name: 'Dr. Lisa Chen',
-      image: '/images/authors/lisa-chen.jpg',
+      image: '/images/authors/profileblog.jpg',
       bio: 'Dr. Chen is a pediatrician and mother who specializes in infant development and maternal health.'
     },
     category: 'baby-care',
@@ -79,7 +79,7 @@ const articles: Article[] = [
     date: '2023-01-18',
     author: {
       name: 'James Wilson',
-      image: '/images/authors/james-wilson.jpg',
+      image: '/images/authors/profileblog.jpg',
       bio: 'James is an educational psychologist and father who focuses on emotional intelligence and resilience in children.'
     },
     category: 'parenting-tips',
@@ -100,7 +100,7 @@ const articles: Article[] = [
     date: '2022-12-12',
     author: {
       name: 'Tasha Brooks',
-      image: '/images/authors/tasha-brooks.jpg',
+      image: '/images/authors/profileblog.jpg',
       bio: 'Tasha is a corporate consultant, author, and mother who specializes in workplace culture and work-life integration.'
     },
     category: 'work-life-balance',

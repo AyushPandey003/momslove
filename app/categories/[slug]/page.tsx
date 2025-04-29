@@ -11,7 +11,8 @@ interface CategoryPageProps {
 }
 
 export async function generateMetadata({ params }: CategoryPageProps): Promise<Metadata> {
-  const slug = await params.slug;
+  const resolvedParams = await params;
+  const slug = resolvedParams.slug;
   const category = getCategoryBySlug(slug);
   
   if (!category) {
@@ -27,9 +28,10 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
 }
 
 export default async function CategoryPage({ params }: CategoryPageProps) {
-  const slug = await params.slug;
+  const resolvedParams = await params;
+  const slug = resolvedParams.slug;
   const category = getCategoryBySlug(slug);
-  
+
   if (!category) {
     notFound();
   }

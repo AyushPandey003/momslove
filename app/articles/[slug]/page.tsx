@@ -61,7 +61,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                     alt={article.author.name}
                     width={40}
                     height={40}
-                    className="rounded-full mr-2"
+                    className="rounded-full mr-2 w-8 h-8"
                   />
                 )}
                 <span className="font-medium">{article.author.name}</span>

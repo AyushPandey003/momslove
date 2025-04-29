@@ -43,7 +43,7 @@ export default function ArticleCard({ article, variant = 'default' }: ArticleCar
               alt={author.name}
               width={24}
               height={24}
-              className="rounded-full"
+              className="rounded-full h-6 w-6"
             />
           )}
           <span>{author?.name || 'Anonymous'}</span>

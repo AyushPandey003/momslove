@@ -45,7 +45,7 @@ export default function ContactForm() {
       setTimeout(() => {
         setSubmitted(false);
       }, 5000);
-    } catch (err) {
+    } catch {
       setError('An error occurred. Please try again later.');
     } finally {
       setIsSubmitting(false);
@@ -71,7 +71,7 @@ export default function ContactForm() {
           </svg>
           <h3 className="mt-4 text-xl font-medium text-gray-900 dark:text-white">Thank you for contacting us!</h3>
           <p className="mt-2 text-gray-600 dark:text-gray-300">
-            We've received your message and will get back to you soon.
+            We&apos;ve received your message and will get back to you soon.
           </p>
         </div>
       ) : (

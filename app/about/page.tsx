@@ -31,18 +31,18 @@ export default function AboutPage() {
           <div>
             <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">Our Mission</h2>
             <div className="prose dark:prose-invert max-w-none">
-              <p>
-                MomsLove was founded with a simple but powerful belief: that motherhood deserves to be celebrated, supported, and shared. 
+                <p>
+                MomsLove was founded with a simple but powerful belief: that motherhood deserves to be celebrated, supported, and shared.
                 We understand that being a mom is both incredibly rewarding and challenging, and that the journey looks different for everyone.
-              </p>
-              <p>
+                </p>
+                <p>
                 Our platform serves as a gathering place for mothers to connect through stories, gain insights from experts, find practical resources, 
                 and feel part of a larger community. We believe that when mothers thrive, families and communities thrive too.
-              </p>
-              <p>
-                Whether you're a new mom, seasoned parent, or supporting someone on their motherhood journey, MomsLove is a place where you can find 
-                inspiration, practical advice, and a reminder that you're not alone.
-              </p>
+                </p>
+                <p>
+                Whether you&apos;re a new mom, seasoned parent, or supporting someone on their motherhood journey, MomsLove is a place where you can find 
+                inspiration, practical advice, and a reminder that you&apos;re not alone.
+                </p>
             </div>
           </div>
         </div>
@@ -83,7 +83,7 @@ export default function AboutPage() {
         <div className="text-center mb-16">
           <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">Join Our Community</h2>
           <p className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-8">
-            MomsLove is more than just a website—it's a community of mothers supporting each other.
+            MomsLove is more than just a website—it&apos;s a community of mothers supporting each other.
             We invite you to be part of this journey by sharing your stories, connecting with other moms,
             and contributing to a space where motherhood is truly celebrated.
           </p>

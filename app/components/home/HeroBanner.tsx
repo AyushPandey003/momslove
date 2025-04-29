@@ -53,7 +53,7 @@ export default function HeroBanner() {
             
             <div className="absolute -bottom-4 -left-4 w-64 h-24 bg-white dark:bg-gray-900 rounded-lg shadow-lg p-4">
               <p className="text-pink-700 dark:text-pink-400 font-semibold">
-                "A mother's love is the fuel that enables a normal human being to do the impossible."
+                &quot;A mother&apos;s love is the fuel that enables a normal human being to do the impossible.&quot;
               </p>
             </div>
           </div>

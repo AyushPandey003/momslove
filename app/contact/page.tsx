@@ -15,7 +15,7 @@ export default function ContactPage() {
             Contact Us
           </h1>
           <p className="mt-4 text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-            Have a question, suggestion, or want to contribute? We'd love to hear from you!
+            Have a question, suggestion, or want to contribute? We&apos;d love to hear from you!
           </p>
         </div>
 
@@ -25,7 +25,7 @@ export default function ContactPage() {
               <p>
                 At MomsLove, we value your feedback and are always looking for ways to improve our content and services. 
                 Whether you have a question, want to share your story, or are interested in collaborating with us, 
-                please don't hesitate to reach out.
+                please don&apos;t hesitate to reach out.
               </p>
               <p>
                 Our team is committed to responding to all inquiries within 2 business days.

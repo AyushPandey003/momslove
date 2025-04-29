@@ -34,16 +34,16 @@ export default function CallToAction() {
         <div className="lg:grid lg:grid-cols-2 lg:gap-8 items-center">
           <div>
             <h2 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl">
-              Share Your Mother's Day Story
+              Share Your Mother&#39;s Day Story
             </h2>
             <p className="mt-4 text-lg text-gray-600 dark:text-gray-300">
-              Honor your mother or a maternal figure who has made a difference in your life. Submit a brief tribute and we'll feature selected stories in our Mother's Day special collection.
+              Honor your mother or a maternal figure who has made a difference in your life. Submit a brief tribute and we&#39;ll feature selected stories in our Mother&#39;s Day special collection.
             </p>
             
             {submitted && (
               <div className="mt-4 p-4 bg-green-100 dark:bg-green-900 rounded-md">
                 <p className="text-green-800 dark:text-green-200">
-                  Thank you for sharing your story! We'll review it soon.
+                  Thank you for sharing your story! We&#39;ll review it soon.
                 </p>
               </div>
             )}

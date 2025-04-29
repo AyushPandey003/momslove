@@ -4,6 +4,7 @@ import { Inter } from 'next/font/google';
 import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
 import { ThemeProvider } from './components/ThemeProvider';
+import AuthProvider from './components/AuthProvider'; // Import AuthProvider
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -20,9 +21,10 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
+        <AuthProvider> {/* Wrap with AuthProvider */}
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
           enableSystem
           disableTransitionOnChange
         >
@@ -32,7 +34,8 @@ export default function RootLayout({
             <Footer />
           </div>
         </ThemeProvider>
+      </AuthProvider> {/* Close AuthProvider */}
       </body>
     </html>
   );
-} 
+}

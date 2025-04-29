@@ -40,7 +40,7 @@ export default function ContactPage() {
                   </svg>
                 </div>
                 <div className="ml-3 text-base text-gray-600 dark:text-gray-300">
-                  <p>info@momslove.com</p>
+                  <p>ayushpandey.job@gmail.com</p>
                 </div>
               </div>
               <div className="flex items-center">
@@ -50,7 +50,7 @@ export default function ContactPage() {
                   </svg>
                 </div>
                 <div className="ml-3 text-base text-gray-600 dark:text-gray-300">
-                  <p>+1 (555) 123-4567</p>
+                  <p>90792</p>
                 </div>
               </div>
               <div className="flex items-center">
@@ -61,8 +61,8 @@ export default function ContactPage() {
                   </svg>
                 </div>
                 <div className="ml-3 text-base text-gray-600 dark:text-gray-300">
-                  <p>123 Motherhood Lane</p>
-                  <p>San Francisco, CA 94103</p>
+                  <p>Block 5</p>
+                  <p>Vit bhopal, MP 466114</p>
                 </div>
               </div>
             </div>

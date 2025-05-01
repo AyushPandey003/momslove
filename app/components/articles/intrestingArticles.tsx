@@ -24,7 +24,7 @@ export default function InterestingArticles({ articles }: InterestingArticlesPro
               <h3 className="text-lg font-semibold mb-2 text-black">{article.title}</h3>
               <p className="text-sm text-gray-600 mb-4 flex-grow">{article.description}</p>
               <Link href={`/articles/${article.id}`}>
-                <button className="bg-black text-white px-4 py-2 rounded hover:bg-gray-800 mt-auto">
+                <button className="bg-black text-white px-4 py-2 hover:bg-gray-800 mt-auto">
                   Read More
                 </button>
               </Link>

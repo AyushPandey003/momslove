@@ -36,7 +36,7 @@ const guides = [
             {guides.map((guide, index) => (
               <div
                 key={index}
-                className="bg-white rounded overflow-hidden shadow-lg hover:shadow-2xl transition duration-300"
+                className="bg-white overflow-hidden shadow-lg hover:shadow-2xl transition duration-300"
               >
                 <div className="relative">
                   <img
@@ -49,7 +49,7 @@ const guides = [
                   </div>
                 </div>
                 <div className="p-4 text-center">
-                  <button className="bg-white text-black border border-black px-4 py-2 text-sm font-medium rounded hover:bg-gray-100 transition">
+                  <button className="bg-white text-black border border-black px-4 py-2 text-sm font-medium  hover:bg-gray-100 transition">
                     Read More →
                   </button>
                 </div>

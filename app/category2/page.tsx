@@ -138,7 +138,7 @@ export default function CategoriesPage() {
                   {/* Read more button */}
                   <Link
                     href={item.href}
-                    className="mt-auto inline-block bg-black text-white text-sm font-medium px-4 py-2 rounded hover:bg-gray-800 transition"
+                    className="mt-auto inline-block bg-black text-white text-sm font-medium px-4 py-2 hover:bg-gray-800 transition"
                   >
                     Read more
                   </Link>

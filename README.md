@@ -2,7 +2,7 @@
 
 A beautiful, modern blog dedicated to celebrating mothers and motherhood around the world. Built with Next.js 15 and TailwindCSS.
 
-![Mom's Love Banner](public/images/readme-banner.png)
+![Mom's Love Banner](public/images/hero-mother.avif)
 
 ## Features
 
@@ -41,7 +41,7 @@ A beautiful, modern blog dedicated to celebrating mothers and motherhood around 
 First, clone the repository:
 
 ```bash
-git clone https://github.com/yourusername/momslove.git
+git clone https://github.com/AyushPandey003/momslove.git
 cd momslove
 ```
 
@@ -81,6 +81,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 ## Deployment
 
 This project can be easily deployed on Vercel:
+Some admin routes are protected from user so be careful if you need advance features mail to foryoumom003@gmail.com i will update.
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/yourusername/momslove)
 

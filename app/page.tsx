@@ -15,13 +15,6 @@ import {
 } from "@/app/data/data"; // Import data
 
 export default function Home() {
-  // REMOVED social constant
-  // const social=[
-  //   { href: 'https://facebook.com/', label: 'Facebook', icon: FaFacebookF },
-  //   { href: 'https://instagram.com/', label: 'Instagram', icon: FaInstagram },
-  //   { href: 'https://youtube.com/', label: 'YouTube', icon: FaYoutube },
-  //   { href: 'https://twitter.com/', label: 'Twitter', icon: FaTwitter },
-  // ]
   
     return (
       <div className="min-h-screen bg-white text-black">

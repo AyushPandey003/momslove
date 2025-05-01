@@ -1,153 +1,92 @@
-'use client';
-
-import Image from 'next/image';
+import { getCategoryWithArticleCount } from '@/app/lib/categories';
 import Link from 'next/link';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { useRef } from 'react';
-import Navbar from '../components/layout/navbar2'; // ✅ Navbar component
+import CategoryLayout from '../components/category/layout';
+import { Metadata } from 'next';
 
-const categoriesData = [
-  {
-    title: 'Technology',
-    items: [
-      {
-        title: 'AI and Cloud Future',
-        imageUrl: '/images/tech1.avif',
-        tags: ['AI', 'Cloud'],
-        description: 'Explore the future of AI and cloud computing.',
-        href: '/articles/tech-ai',
-        readingTime: '5 min read',
-      },
-      {
-        title: 'Blockchain Revolution',
-        imageUrl: '/images/tech2.avif',
-        tags: ['Blockchain'],
-        description: 'Blockchain transforming industries.',
-        href: '/articles/blockchain',
-        readingTime: '7 min read',
-      },
-    ],
-  },
-  {
-    title: 'Design',
-    items: [
-      {
-        title: 'Modern UI/UX Design',
-        imageUrl: '/images/hero.avif',
-        tags: ['UI', 'UX'],
-        description: 'Modern user interfaces and experience.',
-        href: '/articles/ui-ux',
-        readingTime: '6 min read',
-      },
-      {
-        title: 'Visual Storytelling Graphics',
-        imageUrl: '/images/hero.avif',
-        tags: ['Graphic'],
-        description: 'Explore visual storytelling.',
-        href: '/articles/graphic-design',
-        readingTime: '4 min read',
-      },
-    ],
-  },
-];
+export const metadata: Metadata = {
+  title: 'Categories | MomsLove',
+  description: 'Explore our diverse range of motherhood-related topics and categories.',
+};
 
-export default function CategoriesPage() {
-  const carouselRefs = useRef<(HTMLDivElement | null)[]>([]);
-
-  const scrollLeft = (index: number) => {
-    carouselRefs.current[index]?.scrollBy({ left: -320, behavior: 'smooth' });
-  };
-
-  const scrollRight = (index: number) => {
-    carouselRefs.current[index]?.scrollBy({ left: 320, behavior: 'smooth' });
-  };
+export default async function CategoriesPage() {
+  // Fetch categories with article counts
+  const categories = await getCategoryWithArticleCount();
+  
+  // Fallback to the hardcoded data if no categories found (or before migration)
+  const fallbackCategories = [
+    { 
+      id: '1', 
+      name: 'Parenting Tips', 
+      slug: 'parenting-tips', 
+      description: 'Practical advice for everyday parenting challenges',
+      image_url: '/images/hero-mother.avif',
+      created_at: new Date(),
+      article_count: 5
+    },
+    { 
+      id: '2', 
+      name: 'Recipes', 
+      slug: 'recipes', 
+      description: 'Kid-friendly meals and time-saving cooking ideas',
+      image_url: '/images/hero-mother.avif',
+      created_at: new Date(),
+      article_count: 3
+    },
+    { 
+      id: '3', 
+      name: 'Self-Care', 
+      slug: 'self-care', 
+      description: 'Taking care of yourself while taking care of others',
+      image_url: '/images/hero-mother.avif',
+      created_at: new Date(),
+      article_count: 4
+    },
+    { 
+      id: '4', 
+      name: 'Stories', 
+      slug: 'stories', 
+      description: 'Real-life experiences from our community',
+      image_url: '/images/hero-mother.avif',
+      created_at: new Date(),
+      article_count: 6
+    },
+  ];
+  
+  // Use database categories if available, otherwise use fallback
+  const displayCategories = categories.length > 0 ? categories : fallbackCategories;
 
   return (
-    <div className="min-h-screen bg-white text-black relative">
-      {/* ✅ Navbar at the top */}
-      <Navbar />
-
-      {/* Spacer to push content below navbar */}
-      <div className="h-16" />
-
-      {/* Page Title */}
-      <div className="container mx-auto px-4 pt-6">
-        <h2 className="text-3xl font-bold mb-6">Categories</h2>
-      </div>
-
-      {/* Category Carousels */}
-      {categoriesData.map((category, index) => (
-        <section key={index} className="container mx-auto px-4 py-8">
-          <div className="flex justify-between items-center mb-4">
-            <h3 className="text-2xl font-semibold">{category.title}</h3>
-            <div className="flex gap-2">
-              <button
-                onClick={() => scrollLeft(index)}
-                className="p-2 border hover:bg-gray-100"
-                aria-label="Scroll Left"
-              >
-                <ChevronLeft className="w-5 h-5" />
-              </button>
-              <button
-                onClick={() => scrollRight(index)}
-                className="p-2 border hover:bg-gray-100"
-                aria-label="Scroll Right"
-              >
-                <ChevronRight className="w-5 h-5" />
-              </button>
-            </div>
-          </div>
-
-          {/* Card Carousel */}
-          <div
-            ref={(el) => {
-              carouselRefs.current[index] = el;
-            }}
-            className="flex space-x-4 overflow-x-auto scrollbar-hide pb-2"
-          >
-            {category.items.map((item, idx) => (
-              <div
-                key={idx}
-                className="min-w-[300px] bg-white shadow-md hover:shadow-lg transition-shadow duration-200 flex flex-col overflow-hidden"
-              >
-                <Image
-                  src={item.imageUrl}
-                  alt={item.title}
-                  width={300}
-                  height={180}
-                  className="w-full h-[180px] object-cover"
-                />
-
-                <div className="flex-1 flex flex-col p-4">
-                  {/* Tag + reading time */}
-                  <div className="text-xs text-gray-500 mb-2">
-                    <span className="font-semibold">#{category.title}</span>
-                    <span> · {item.readingTime}</span>
+    <CategoryLayout>
+      <div className="container mx-auto px-4 py-12">
+        <h1 className="text-4xl font-bold text-center mb-12">Explore Categories</h1>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {displayCategories.map((category) => (
+            <Link 
+              key={category.id}
+              href={`/category2/${category.slug}`}
+              className="block group"
+            >
+              <div className="bg-white shadow-sm hover:shadow-md transition-shadow rounded-lg overflow-hidden">
+                <div className="h-48 overflow-hidden relative">
+                  <img 
+                    src={category.image_url || '/images/default-category.jpg'} 
+                    alt={category.name}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
+                    <h2 className="text-xl font-bold text-white">{category.name}</h2>
+                    <p className="text-white/80 text-sm">{category.article_count} articles</p>
                   </div>
-
-                  {/* Title */}
-                  <h4 className="text-lg font-bold mb-2 leading-tight">
-                    {item.title}
-                  </h4>
-
-                  {/* Description */}
-                  <p className="text-sm text-gray-600 mb-4 flex-1">
-                    {item.description}
-                  </p>
-
-                  {/* Read more button */}
-                  <Link
-                    href={item.href}
-                    className="mt-auto inline-block bg-black text-white text-sm font-medium px-4 py-2 hover:bg-gray-800 transition"
-                  >
-                    Read more
-                  </Link>
+                </div>
+                <div className="p-4">
+                  <p className="text-gray-600">{category.description || `Explore our collection of articles about ${category.name}`}</p>
                 </div>
               </div>
-            ))}
-          </div>
-        </section>
-      ))}
-    </div>
+            </Link>
+          ))}
+        </div>
+      </div>
+    </CategoryLayout>
   );
 }

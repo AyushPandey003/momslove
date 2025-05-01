@@ -21,26 +21,25 @@ export interface Article {
   author: Author;
   category: string;
   featured?: boolean;
+  tags?: string[];
 }
 
 export interface Story {
   id: string;
   title: string;
   content: string;
-  userId: string; // Link to the user who submitted
-  user_name: string; // Store user name for display
-  user_email?: string; // Optional: store email if needed
-  status: 'pending' | 'approved' | 'rejected'; // Moderation status
+  userId: string;
+  user_name: string;
+  user_email?: string;
+  status: 'pending' | 'approved' | 'rejected';
   submitted_at: Date;
   approvedAt?: Date;
   rejectedAt?: Date;
-  rejectionReason?: string; // Optional reason for rejection
+  rejectionReason?: string;
 }
 
-
-// types.ts (optional shared file for types)
 export type ContentBlock =  | { type: "text"; content: string; id: string  }
-| { type: "image"; url: string; alt?: string; id: string  };;
+| { type: "image"; url: string; alt?: string; id: string  };
 
 export interface Article2 {
   title: string;
@@ -63,4 +62,72 @@ export interface AboutContent {
   quote: string;
   socialLinks: { platform: string; url: string; icon: string }[];
   content: ContentBlock[];
+}
+
+export interface NavLink {
+  label: string;
+  href: string;
+}
+
+export interface RecentArticle {
+  id: number;
+  title: string;
+  author: string;
+  date: string;
+  tags: string[];
+  description: string;
+  imageUrl: string;
+}
+
+import { IconType } from 'react-icons';
+
+export interface SocialLink {
+  href: string;
+  label: string;
+  icon: IconType;
+}
+
+export interface ProfileCardData {
+  imageSrc: string;
+  name: string;
+  description: string;
+  socials: SocialLink[];
+}
+
+export interface DestinationsCardData {
+  title: string;
+  items: string[];
+}
+
+export interface NewsletterCardData {
+  title: string;
+  placeholder: string;
+}
+
+export interface WhereToNextCardData {
+  title: string;
+}
+
+export interface TOCItem {
+  id: string;
+  label: string;
+}
+
+export interface SampleArticleData {
+  title: string;
+  date: string;
+  readingTime: string;
+  quote: string;
+  toc: TOCItem[];
+  initialContent: ContentBlock[];
+  relatedArticles: RelatedArticle[];
+  tags?: string[];
+  excerpt?: string;
+  coverImage?: string;
+  content?: string;
+}
+
+export interface PageFooterLink {
+  label: string;
+  href: string;
 }

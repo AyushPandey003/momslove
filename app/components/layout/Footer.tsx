@@ -1,6 +1,7 @@
 
 import Link from "next/link";
 import InstagramBanner from "../home/bottomGallery";
+import { footerLinks } from "@/app/data/data"; // Import footerLinks data
 
 export default function Footer() {
   return (
@@ -19,10 +20,11 @@ export default function Footer() {
 
           {/* Right links */}
           <div className="flex space-x-6 mt-4 md:mt-0 text-sm text-gray-500">
-            <Link href="/" className="hover:text-black transition">Home</Link>
-            <Link href="/about" className="hover:text-black transition">About me</Link>
-            <Link href="/categories" className="hover:text-black transition">Categories</Link>
-            <Link href="/contact" className="hover:text-black transition">Contact</Link>
+            {footerLinks.map((link, index) => (
+              <Link key={index} href={link.href} className="hover:text-black transition">
+                {link.label}
+              </Link>
+            ))}
           </div>
         </div>
       </footer>

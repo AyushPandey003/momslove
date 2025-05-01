@@ -1,8 +1,9 @@
 'use client';
 
-import { FC } from 'react';
-import { X } from 'lucide-react';
-import Link from 'next/link';
+import { FC } from "react";
+import { X } from "lucide-react";
+import Link from "next/link";
+import { navLinks } from "@/app/data/data"; // Import navLinks data
 
 interface HamburgerMenuProps {
   isOpen: boolean;
@@ -26,18 +27,17 @@ const HamburgerMenu: FC<HamburgerMenuProps> = ({ isOpen, onClose }) => {
       <div className="flex flex-col lg:flex-row justify-center items-center h-full px-10 gap-20">
         {/* Nav Links */}
         <nav className="space-y-10 text-5xl font-light w-full lg:w-1/3 h-1/2">
-          <Link href="/" className="block border-l-4 border-white pl-4 font-medium hover:underline">
-            Home
-          </Link>
-          <Link href="/about2" className="block pl-4 hover:underline">
-            About me
-          </Link>
-          <Link href="/category2" className="block pl-4 hover:underline">
-            Categories
-          </Link>
-          <Link href="/contacts" className="block pl-4 hover:underline">
-            Contact
-          </Link>
+          {navLinks.map((link, index) => (
+            <Link
+              key={index}
+              href={link.href}
+              className={`block pl-4 hover:underline ${
+                index === 0 ? "border-l-4 border-white font-medium" : "" // Apply special style for the first link (Home)
+              }`}
+            >
+              {link.label}
+            </Link>
+          ))}
         </nav>
 
         {/* Newsletter Card */}

@@ -21,7 +21,7 @@ export default function Card({
 }: CardProps) {
   return (
     <div
-      className="min-w-[300px] bg-white rounded-xl shadow-md border transition-all hover:shadow-xl focus-within:ring-2 focus-within:ring-blue-400"
+      className="min-w-[300px] bg-white  shadow-md border transition-all hover:shadow-xl focus-within:ring-2 focus-within:ring-blue-400"
       tabIndex={0}
       aria-label={`Article card: ${description}`}
     >

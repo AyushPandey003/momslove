@@ -1,7 +1,7 @@
 import './globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import Header from './components/layout/Header';
+// import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
 import { ThemeProvider } from './components/ThemeProvider';
 import AuthProvider from './components/AuthProvider'; // Import AuthProvider
@@ -32,7 +32,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <div className="flex min-h-screen flex-col">
-            <Header />
+            {/* <Header /> */}
             <div className="flex-1">{children}</div>
             <Footer />
           </div>

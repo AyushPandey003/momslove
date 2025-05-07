@@ -23,7 +23,7 @@ export async function getStories(status?: 'pending' | 'approved' | 'rejected'): 
       submitted_at, approved_at, rejected_at, rejection_reason
     FROM stories
   `;
-  const values: any[] = [];
+  const values: string[] = [];
 
   if (status) {
     sql += ` WHERE status = $1`;

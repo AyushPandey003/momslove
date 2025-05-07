@@ -3,11 +3,11 @@ import { auth } from '@/auth';
 import { 
   getUserPreferences,
   updateUserPreferences,
-  createUserPreferences
+  createUserPreferences,
 } from '@/app/lib/preferences';
 
 // GET handler to fetch user preferences
-export async function GET(request: Request) {
+export async function GET() {
   const session = await auth();
 
   // Check if user is authenticated
@@ -46,10 +46,19 @@ export async function PUT(request: Request) {
     const { email_notifications, theme, digest_frequency } = await request.json();
 
     // Prepare update data
-    const updateData: any = {};
+    type ThemeType = 'light' | 'dark' | 'system';
+    type DigestFrequencyType = 'daily' | 'weekly' | 'monthly' | 'none';
+    
+    interface PreferencesUpdateData {
+      email_notifications?: boolean;
+      theme?: ThemeType;
+      digest_frequency?: DigestFrequencyType;
+    }
+    
+    const updateData: PreferencesUpdateData = {};
     if (email_notifications !== undefined) updateData.email_notifications = email_notifications;
-    if (theme !== undefined) updateData.theme = theme;
-    if (digest_frequency !== undefined) updateData.digest_frequency = digest_frequency;
+    if (theme !== undefined) updateData.theme = theme as ThemeType;
+    if (digest_frequency !== undefined) updateData.digest_frequency = digest_frequency as DigestFrequencyType;
 
     // Update user preferences
     await updateUserPreferences(session.user.id, updateData);
@@ -65,4 +74,4 @@ export async function PUT(request: Request) {
     console.error('Preferences update failed:', error);
     return NextResponse.json({ error: 'Failed to update preferences' }, { status: 500 });
   }
-} 
+}

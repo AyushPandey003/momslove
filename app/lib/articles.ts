@@ -1,6 +1,5 @@
-import { pool, query } from './db';
+import { query } from './db';
 import { v4 as uuidv4 } from 'uuid';
-import { notFound } from 'next/navigation';
 
 export type Article = {
   id: string;
@@ -24,13 +23,32 @@ export type ArticleWithTags = Article & {
   category?: { id: string; name: string; slug: string } | null;
 };
 
-export async function getRecentArticles(limit = 10): Promise<ArticleWithTags[]> {
+export async function getRecentArticles(limit = 10, offset = 0): Promise<ArticleWithTags[]> {
   const articles = await query<Article>(`
     SELECT * FROM articles
     WHERE status = 'published'
     ORDER BY published_at DESC
-    LIMIT $1
-  `, [limit]);
+    LIMIT $1 OFFSET $2
+  `, [limit, offset]);
+
+  return await addTagsToArticles(articles);
+}
+
+export async function getTotalArticlesCount(): Promise<number> {
+  const result = await query<{ count: string }>(`
+    SELECT COUNT(*) as count FROM articles
+    WHERE status = 'published'
+  `, []);
+
+  return parseInt(result[0].count);
+}
+
+export async function getUserArticles(userId: string): Promise<ArticleWithTags[]> {
+  const articles = await query<Article>(`
+    SELECT * FROM articles
+    WHERE user_id = $1
+    ORDER BY updated_at DESC
+  `, [userId]);
 
   return await addTagsToArticles(articles);
 }
@@ -99,7 +117,7 @@ export async function createArticle(article: Omit<Article, 'id' | 'created_at' |
 export async function updateArticle(id: string, article: Partial<Omit<Article, 'id' | 'created_at' | 'updated_at'>>): Promise<void> {
   // Build dynamic set clause for update
   const updates: string[] = [];
-  const values: any[] = [];
+  const values: (string | number | Date | null)[] = [];
   let counter = 1;
   
   // Add each field that needs to be updated

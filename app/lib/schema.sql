@@ -86,6 +86,26 @@ CREATE TABLE IF NOT EXISTS comments (
   FOREIGN KEY (article_id) REFERENCES articles(id) ON DELETE CASCADE,
   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
+-- Profile Table
+CREATE TABLE IF NOT EXISTS profiles (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id INTEGER NOT NULL UNIQUE,
+  bio TEXT,
+  location TEXT,
+  website TEXT,
+  twitter TEXT,
+  instagram TEXT,
+  facebook TEXT,
+  profile_image TEXT,
+  phone_number TEXT,
+  display_email BOOLEAN DEFAULT FALSE,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+-- Add indexes for better performance
+CREATE INDEX IF NOT EXISTS idx_profiles_user_id ON profiles(user_id); 
 
 -- Add indexes for better performance
 CREATE INDEX IF NOT EXISTS idx_articles_user_id ON articles(user_id);
@@ -94,4 +114,16 @@ CREATE INDEX IF NOT EXISTS idx_articles_slug ON articles(slug);
 CREATE INDEX IF NOT EXISTS idx_stories_userId ON stories("userId");
 CREATE INDEX IF NOT EXISTS idx_stories_status ON stories(status);
 CREATE INDEX IF NOT EXISTS idx_comments_article_id ON comments(article_id);
-CREATE INDEX IF NOT EXISTS idx_comments_user_id ON comments(user_id); 
+CREATE INDEX IF NOT EXISTS idx_comments_user_id ON comments(user_id);
+
+-- Newsletter Subscribers Table
+CREATE TABLE IF NOT EXISTS newsletter_subscribers (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  email TEXT NOT NULL UNIQUE,
+  name TEXT,
+  status TEXT NOT NULL DEFAULT 'active', -- active, unsubscribed
+  source TEXT, -- where they subscribed from (homepage, article, etc.)
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+  last_email_sent TIMESTAMP WITH TIME ZONE
+); 

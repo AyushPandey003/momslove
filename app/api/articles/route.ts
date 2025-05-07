@@ -1,21 +1,23 @@
 import { NextResponse } from 'next/server';
 import { auth } from '@/auth';
+import { Article } from '@/app/types';
 import { 
   getRecentArticles, 
   getArticleBySlug, 
   createArticle,
   updateArticle,
-  deleteArticle
+  deleteArticle,
+  getTotalArticlesCount
 } from '@/app/lib/articles';
 import { addTagsToArticle } from '@/app/lib/tags';
-import { v4 as uuidv4 } from 'uuid';
-
 // GET handler to fetch articles
 export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
     const slug = searchParams.get('slug');
+    const page = searchParams.get('page') ? parseInt(searchParams.get('page')!) : 1;
     const limit = searchParams.get('limit') ? parseInt(searchParams.get('limit')!) : 10;
+    const offset = (page - 1) * limit;
 
     if (slug) {
       // Get a specific article by slug
@@ -27,9 +29,20 @@ export async function GET(request: Request) {
       
       return NextResponse.json({ article });
     } else {
-      // Get recent articles
-      const articles = await getRecentArticles(limit);
-      return NextResponse.json({ articles });
+      // Get recent articles with pagination
+      const articles = await getRecentArticles(limit, offset);
+      const totalCount = await getTotalArticlesCount();
+      const totalPages = Math.ceil(totalCount / limit);
+      
+      return NextResponse.json({ 
+        articles,
+        pagination: {
+          total: totalCount,
+          page,
+          limit,
+          totalPages
+        }
+      });
     }
   } catch (error) {
     console.error("Failed to fetch articles:", error);
@@ -102,19 +115,23 @@ export async function PATCH(request: Request) {
     }
 
     // Prepare update data
-    const updateData: any = {};
+    const updateData: Partial<Article> & { status?: 'draft' | 'published' } = {};
     if (title !== undefined) updateData.title = title;
     if (slug !== undefined) updateData.slug = slug;
     if (content !== undefined) updateData.content = content;
     if (excerpt !== undefined) updateData.excerpt = excerpt;
-    if (cover_image !== undefined) updateData.cover_image = cover_image;
-    if (category_id !== undefined) updateData.category_id = category_id;
+    if (cover_image !== undefined) updateData.coverImage = cover_image;
+    if (category_id !== undefined) updateData.category = category_id;
     
     // Update published_at if status is changing to published
     if (status !== undefined) {
-      updateData.status = status;
+      if (status === 'draft' || status === 'published') {
+        updateData.status = status as 'draft' | 'published';
+      } else {
+        return NextResponse.json({ error: 'Invalid status value' }, { status: 400 });
+      }
       if (status === 'published') {
-        updateData.published_at = new Date();
+        updateData.date = new Date().toISOString();
       }
     }
 
@@ -163,4 +180,4 @@ export async function DELETE(request: Request) {
     console.error('Article deletion failed:', error);
     return NextResponse.json({ error: 'Failed to delete article' }, { status: 500 });
   }
-} 
+}

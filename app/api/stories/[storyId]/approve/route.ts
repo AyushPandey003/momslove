@@ -8,8 +8,11 @@ interface ApproveRouteParams {
   };
 }
 
+// Use edge runtime for lower latency
+export const runtime = 'edge';
+
 export async function POST(
-  request: Request, // Request is unused but required by Next.js convention
+  request: Request,
   { params }: ApproveRouteParams
 ) {
   const session = await auth();
@@ -30,8 +33,18 @@ export async function POST(
     // 3. Approve the story
     await approveStory(storyId);
 
-    // 4. Return success response
-    return NextResponse.json({ message: 'Story approved successfully' });
+    // 4. Set cache headers for faster subsequent loads
+    const headers = new Headers();
+    headers.set('Cache-Control', 'private, s-maxage=30, stale-while-revalidate=60');
+
+    // 5. Return success response
+    return NextResponse.json(
+      { message: 'Story approved successfully' },
+      { 
+        status: 200,
+        headers
+      }
+    );
 
   } catch (error) {
     console.error('Failed to approve story:', error);

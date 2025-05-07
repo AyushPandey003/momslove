@@ -60,7 +60,7 @@ export async function updateUserPreferences(
   
   // Build dynamic set clause for update
   const updates: string[] = [];
-  const values: any[] = [];
+  const values: (string | boolean | Date | 'light' | 'dark' | 'system' | 'daily' | 'weekly' | 'monthly' | 'none')[] = [];
   let counter = 1;
   
   for (const [key, value] of Object.entries(preferences)) {

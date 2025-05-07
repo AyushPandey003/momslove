@@ -3,7 +3,11 @@ import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
-import CommentSection from '@/app/components/blog/CommentSection';
+import dynamic from 'next/dynamic';
+
+// Use dynamic import for client components
+const CommentSection = dynamic(() => import('@/app/components/comments/CommentSection'), {
+});
 
 interface BlogPostParams {
   params: {
@@ -46,7 +50,9 @@ export async function generateMetadata({ params }: BlogPostParams): Promise<Meta
 }
 
 export default async function BlogPost({ params }: BlogPostParams) {
-  const article = await getArticleBySlug(params.slug);
+  const slug = params.slug;
+
+  const article = await getArticleBySlug(slug);
   
   if (!article) {
     notFound();
@@ -114,7 +120,7 @@ export default async function BlogPost({ params }: BlogPostParams) {
           
           {/* Comments section */}
           <div className="mt-12">
-            <CommentSection articleId={article.id} slug={params.slug} />
+            <CommentSection articleId={article.id} />
           </div>
           
           {/* Related articles placeholder - can be implemented later */}

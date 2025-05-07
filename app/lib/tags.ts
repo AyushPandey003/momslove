@@ -45,7 +45,7 @@ export async function createTag(tag: Omit<Tag, 'id' | 'created_at'>): Promise<st
 export async function updateTag(id: string, tag: Partial<Omit<Tag, 'id' | 'created_at'>>): Promise<void> {
   // Build dynamic set clause for update
   const updates: string[] = [];
-  const values: any[] = [];
+  const values: string[] = [];
   let counter = 1;
 
   for (const [key, value] of Object.entries(tag)) {
@@ -90,7 +90,7 @@ export async function addTagsToArticle(articleId: string, tagIds: string[]): Pro
   if (!tagIds.length) return;
   
   // Build a values string for multiple insertions
-  const values: any[] = [];
+  const values: string[] = [];
   const placeholders: string[] = [];
   let counter = 1;
   

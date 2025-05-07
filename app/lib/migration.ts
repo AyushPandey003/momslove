@@ -1,7 +1,7 @@
 import { recentArticles } from '@/app/data/data';
-import { createArticle, Article } from './articles';
-import { createCategory, Category } from './categories';
-import { createTag, Tag } from './tags';
+import { createArticle } from './articles';
+import { createCategory } from './categories';
+import { createTag } from './tags';
 import { addTagsToArticle } from './tags';
 import { query } from './db';
 

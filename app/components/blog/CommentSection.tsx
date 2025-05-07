@@ -1,10 +1,10 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useForm } from 'react-hook-form';
-import { auth } from '@/auth';
 import { useSession } from 'next-auth/react';
 import { submitComment, editComment, removeComment } from '@/app/lib/actions';
+import Link from 'next/link';
 
 type Comment = {
   id: string;
@@ -35,7 +35,7 @@ export default function CommentSection({ articleId, slug }: CommentSectionProps)
   });
 
   // Fetch comments
-  const fetchComments = async () => {
+  const fetchComments = useCallback(async () => {
     try {
       setLoading(true);
       const response = await fetch(`/api/comments?articleId=${articleId}`);
@@ -52,11 +52,11 @@ export default function CommentSection({ articleId, slug }: CommentSectionProps)
     } finally {
       setLoading(false);
     }
-  };
-
+  }, [articleId]);
+  
   useEffect(() => {
     fetchComments();
-  }, [articleId]);
+  }, [articleId, fetchComments]);
 
   const onSubmitComment = async (data: { content: string }) => {
     if (!session) {
@@ -93,7 +93,8 @@ export default function CommentSection({ articleId, slug }: CommentSectionProps)
           fetchComments();
         }
       }
-    } catch (error) {
+    } catch (err) {
+      console.error('Error submitting comment:', err);
       setSubmitStatus({
         success: false,
         message: 'An error occurred. Please try again.',
@@ -129,7 +130,8 @@ export default function CommentSection({ articleId, slug }: CommentSectionProps)
       } else {
         setError(result.message);
       }
-    } catch (error) {
+    } catch (err) {
+      console.error('Error deleting comment:', err);
       setError('Failed to delete comment. Please try again.');
     }
   };
@@ -184,7 +186,7 @@ export default function CommentSection({ articleId, slug }: CommentSectionProps)
       ) : (
         <div className="mb-8 p-4 bg-gray-100 rounded-md">
           <p>
-            Please <a href="/api/auth/signin" className="text-blue-600 hover:underline">sign in</a> to leave a comment.
+            Please <Link href="/api/auth/signin" className="text-blue-600 hover:underline">sign in</Link> to leave a comment.
           </p>
         </div>
       )}
@@ -237,4 +239,4 @@ export default function CommentSection({ articleId, slug }: CommentSectionProps)
       )}
     </div>
   );
-} 
+}

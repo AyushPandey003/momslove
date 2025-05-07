@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 
 type Story = {
@@ -35,7 +35,9 @@ type FormValues = {
   status: 'draft' | 'published';
 };
 
-export default function ConvertStoryPage({ params }: { params: { storyId: string } }) {
+export default function ConvertStoryPage() {
+  const params = useParams();
+  const storyId = params.storyId as string;
   const { data: session, status } = useSession();
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
@@ -82,7 +84,7 @@ export default function ConvertStoryPage({ params }: { params: { storyId: string
         setIsLoading(true);
         
         // Fetch the story
-        const storyResponse = await fetch(`/api/stories/${params.storyId}`);
+        const storyResponse = await fetch(`/api/stories/${storyId}`);
         if (!storyResponse.ok) {
           throw new Error('Failed to fetch story');
         }
@@ -123,7 +125,7 @@ export default function ConvertStoryPage({ params }: { params: { storyId: string
     };
     
     fetchData();
-  }, [status, params.storyId, setValue]);
+  }, [status,storyId, setValue]);
   
   const onSubmit = async (data: FormValues) => {
     if (status !== 'authenticated') {
@@ -163,7 +165,6 @@ export default function ConvertStoryPage({ params }: { params: { storyId: string
         throw new Error('Failed to create article');
       }
       
-      const result = await response.json();
       
       setMessage('Story successfully converted to article!');
       

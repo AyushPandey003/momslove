@@ -23,8 +23,6 @@ export default async function ModerateStoriesPage() {
   const isAdmin = user?.admin === true; // Placeholder check
 
   if (!session || !isAdmin) {
-    // Redirect non-admins or unauthenticated users
-    // Redirecting to home, but could redirect to an unauthorized page or login
     console.log('Access denied to moderation panel for user:', user?.email);
     redirect('/');
   }

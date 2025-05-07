@@ -5,7 +5,6 @@ import { useForm } from 'react-hook-form';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { updatePreferences } from '@/app/lib/actions';
-import { UserPreferences } from '@/app/lib/preferences';
 
 type FormValues = {
   emailNotifications: boolean;
@@ -14,14 +13,14 @@ type FormValues = {
 };
 
 export default function PreferencesPage() {
-  const { data: session, status } = useSession();
+  const { status } = useSession();
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [saveMessage, setSaveMessage] = useState<string | null>(null);
   
-  const { register, handleSubmit, reset, formState: { errors } } = useForm<FormValues>({
+  const { register, handleSubmit, reset } = useForm<FormValues>({
     defaultValues: {
       emailNotifications: true,
       theme: 'light',
@@ -84,7 +83,8 @@ export default function PreferencesPage() {
       } else {
         setError(result.message);
       }
-    } catch (error) {
+    } catch (err) {
+      console.error('Error saving preferences:', err);
       setError('An error occurred while saving preferences');
     } finally {
       setIsSaving(false);

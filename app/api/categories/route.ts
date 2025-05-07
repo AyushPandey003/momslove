@@ -93,7 +93,14 @@ export async function PATCH(request: Request) {
     }
 
     // Prepare update data
-    const updateData: any = {};
+    interface CategoryUpdateData {
+      name?: string;
+      slug?: string;
+      description?: string;
+      image_url?: string;
+    }
+    
+    const updateData: CategoryUpdateData = {};
     if (name !== undefined) updateData.name = name;
     if (slug !== undefined) updateData.slug = slug;
     if (description !== undefined) updateData.description = description;

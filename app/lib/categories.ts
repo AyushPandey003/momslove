@@ -49,7 +49,7 @@ export async function createCategory(category: Omit<Category, 'id' | 'created_at
 export async function updateCategory(id: string, category: Partial<Omit<Category, 'id' | 'created_at'>>): Promise<void> {
   // Build dynamic set clause for update
   const updates: string[] = [];
-  const values: any[] = [];
+  const values: (string | null)[] = [];
   let counter = 1;
 
   for (const [key, value] of Object.entries(category)) {

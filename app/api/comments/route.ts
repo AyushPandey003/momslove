@@ -38,7 +38,10 @@ export async function POST(request: Request) {
   }
 
   try {
-    const { articleId, content } = await request.json();
+    const body = await request.json();
+    // Support both articleId and article_id
+    const articleId = body.articleId || body.article_id;
+    const { content } = body;
 
     // Basic validation
     if (!articleId) {

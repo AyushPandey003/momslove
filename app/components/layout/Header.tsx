@@ -2,7 +2,6 @@
 
 import Link from 'next/link';
 import { useSession, signOut } from 'next-auth/react';
-import { useState } from 'react';
 import { ThemeToggle } from '@/app/components/ui/ThemeToggle';
 import MobileMenu from './MobileMenu'; // Import the new MobileMenu component
 
@@ -17,9 +16,6 @@ const navigation = [
 
 export default function Header() {
   const { data: session, status } = useSession();
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
-  const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
 
   // Filter out Preferences link if user is not logged in
   const filteredNavigation = session ? navigation : navigation.filter(item => item.name !== 'Preferences');

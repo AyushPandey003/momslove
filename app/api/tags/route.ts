@@ -91,7 +91,12 @@ export async function PATCH(request: Request) {
     }
 
     // Prepare update data
-    const updateData: any = {};
+    interface TagUpdateData {
+      name?: string;
+      slug?: string;
+    }
+    
+    const updateData: TagUpdateData = {};
     if (name !== undefined) updateData.name = name;
     if (slug !== undefined) updateData.slug = slug;
 

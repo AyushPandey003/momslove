@@ -12,7 +12,7 @@ type FormValues = {
 };
 
 export default function SubmitStoryPage() {
-  const { data: session, status } = useSession();
+  const { status } = useSession();
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<{ success: boolean; message: string } | null>(null);
@@ -50,7 +50,8 @@ export default function SubmitStoryPage() {
           router.push('/approved-stories');
         }, 2000);
       }
-    } catch (error) {
+    } catch (err) {
+      console.error('Error submitting story:', err);
       setSubmitStatus({
         success: false,
         message: 'An error occurred. Please try again.'

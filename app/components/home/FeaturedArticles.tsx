@@ -33,8 +33,7 @@ async function getUserPreferences(userId: string): Promise<string[]> {
     // await pool.end(); // Ensure pool is closed on error too
     return []; // Return empty on error
   }
-  // Note: In a real app, manage the DB connection pool more robustly.
-  // Creating a new pool for each request is inefficient.
+
 }
 
 // Make the component async to fetch data server-side
@@ -53,11 +52,11 @@ export default async function FeaturedArticles() {
   if (preferredSlugs.length > 0) {
     const preferredArticles = allArticles
       .filter(article => preferredSlugs.includes(article.category))
-      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+      .sort((a, b) => new Date(b.date ?? 0).getTime() - new Date(a.date ?? 0).getTime());
 
     const otherArticles = allArticles
       .filter(article => !preferredSlugs.includes(article.category))
-      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+      .sort((a, b) => new Date(b.date ?? 0).getTime() - new Date(a.date ?? 0).getTime());
 
     const combined = [...preferredArticles, ...otherArticles];
     const uniqueArticleIds = new Set<string>();

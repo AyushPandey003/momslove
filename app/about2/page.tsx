@@ -28,7 +28,7 @@ export default function SingleArticlePage() {
             </section>
       
             {/* Article Content Overlapping Hero */}
-        <div className="max-w-5xl mx-auto px-4 py-12 -mt-40 relative z-20">
+        <div className="max-w-5xl mx-auto px-4 -mt-60 relative z-20">
           <About/>
         </div>
       

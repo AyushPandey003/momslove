@@ -89,6 +89,18 @@ Some admin routes are protected from user so be careful if you need advance feat
 
 This project is licensed under the MIT License - see the LICENSE file for details.
 
+## UploadThing Configuration
+
+For the profile image upload functionality to work, you need to set up UploadThing:
+
+1. Create an account at [UploadThing](https://uploadthing.com/)
+2. Create a new project
+3. Add these environment variables to your `.env.local` file:
+```
+UPLOADTHING_SECRET=your-uploadthing-secret
+UPLOADTHING_APP_ID=your-uploadthing-app-id
+```
+
 ---
 
 Made with ❤️ for celebrating mothers everywhere.

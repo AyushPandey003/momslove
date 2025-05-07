@@ -67,22 +67,25 @@ export default function ModerationPanel() {
     setError(null);
     const reason = rejectionReasons[storyId] || '';
 
-    if (status === 'rejected' && !reason.trim()) {
-        // Optional: Enforce rejection reason locally before sending
-        // setError(`Please provide a reason for rejecting story ${storyId}.`);
-        // setUpdatingStoryId(null);
-        // return;
-    }
-
-
     try {
-      const response = await fetch(`/api/stories/${storyId}`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ status, rejectionReason: status === 'rejected' ? reason : undefined }),
-      });
+      let response;
+      
+      if (status === 'approved') {
+        response = await fetch(`/api/stories/${storyId}/approve`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          }
+        });
+      } else {
+        response = await fetch(`/api/stories/${storyId}/reject`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ reason })
+        });
+      }
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -96,7 +99,6 @@ export default function ModerationPanel() {
           delete newState[storyId];
           return newState;
       });
-
 
   } catch (err: unknown) {
       console.error(`Failed to ${status} story:`, err);

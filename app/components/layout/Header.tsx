@@ -1,8 +1,8 @@
+'use client';
+
 import Link from 'next/link';
-// import { ThemeToggle } from '@/app/components/ui/ThemeToggle';
-import { auth } from '@/auth'; // Import server-side auth
-import LoginButton from '@/app/components/auth/LoginButton';
-import LogoutButton from '@/app/components/auth/LogoutButton';
+import { useSession, signOut } from 'next-auth/react';
+import { ThemeToggle } from '@/app/components/ui/ThemeToggle';
 import MobileMenu from './MobileMenu'; // Import the new MobileMenu component
 
 const navigation = [
@@ -14,15 +14,11 @@ const navigation = [
   { name: 'Contact', href: '/contact' },
 ];
 
-// Make Header an async server component
-export default async function Header() {
-  const session = await auth(); // Fetch session server-side
-  const user = session?.user;
+export default function Header() {
+  const { data: session, status } = useSession();
 
   // Filter out Preferences link if user is not logged in
-  const filteredNavigation = user
-    ? navigation
-    : navigation.filter(item => item.name !== 'Preferences');
+  const filteredNavigation = session ? navigation : navigation.filter(item => item.name !== 'Preferences');
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -62,15 +58,23 @@ export default async function Header() {
 
              {/* Desktop Auth Buttons & Theme Toggle */}
              <div className="flex items-center gap-x-4">
-                {/* <ThemeToggle /> */}
-                {user ? (
-                  <LogoutButton userName={user.name} userImage={user.image} />
+                <ThemeToggle />
+                {status === 'authenticated' ? (
+                  <button
+                    onClick={() => signOut()}
+                    className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition text-sm"
+                  >
+                    Logout
+                  </button>
+                ) : status === 'loading' ? (
+                  <span className="text-gray-500 dark:text-gray-400">Loading...</span>
                 ) : (
-                  <LoginButton />
+                  <Link href="/api/auth/signin" className="px-4 py-2 bg-black text-white rounded hover:bg-gray-800 transition text-sm">
+                    Login
+                  </Link>
                 )}
              </div>
           </div>
-
 
           {/* Mobile Menu Trigger (uses MobileMenu component) */}
           <MobileMenu navigation={filteredNavigation} session={session} />

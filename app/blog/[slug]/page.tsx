@@ -1,125 +1,131 @@
-// // app/blog/sample-article/page.tsx
-
-// import ArticlePage from "@/app/components/articles/newarticlesContent";
-
-// interface TextBlock {
-//   id: string;
-//   type: 'text';
-//   content: string;
-// }
-
-// interface ImageBlock {
-//   id: string;
-//   type: 'image';
-//   url: string;
-//   alt: string;
-// }
-
-// export default function SampleArticlePage() {
-//   type ContentBlock = TextBlock | ImageBlock;
-//   const toc = [
-//     { id: "overview", label: "Overview" },
-//     { id: "basics",   label: "The Basics" },
-//     { id: "spring",   label: "Spring in Japan" },
-//     { id: "summer",   label: "Summer in Japan" },
-//     { id: "fall",     label: "Fall in Japan" },
-//     { id: "winter",   label: "Winter in Japan" },
-//   ];
-
-//   const initialContent = [
-//     {
-//       id: "overview",
-//       type: "text",
-//       content:
-//         "Japan is truly a year-round destination, and Japanese culture is remarkable in its profound appreciation of the changing seasons. As you’ll see when you visit…",
-//     } as const, // Add 'as const'
-//     {
-//       id: "basics",
-//       type: "text",
-//       content:
-//         "On the other hand, if your dates are flexible it’s worth thinking about which time of year you might enjoy most. After all, some travelers hate the cold — or the heat and humidity of summer…",
-//     } as const, // Add 'as const'
-//     {
-//       id: "spring",
-//       type: "image",
-//       url: "/images/spring-cherry-blossoms.jpg",
-//       alt: "Cherry blossoms in full bloom",
-//     } as const, // Add 'as const'
-//     {
-//       id: "summer",
-//       type: "image",
-//       url: "/images/summer-festival.jpg",
-//       alt: "Summer festival lanterns",
-//     } as const, // Add 'as const'
-//     // …and so on for fall, winter, etc.
-//   ];
-
-//   return (
-//     <ArticlePage
-//       title="When Is The Best Time of Year To Visit Japan?"
-//       date="25.01.2021"
-//       readingTime="8 minutes reading"
-//       quote="The good news for travelers is that there is no single best time of year to travel to Japan — yet this makes it difficult to decide when to visit, as each of Japan’s seasons has its own special highlights."
-//       toc={toc}
-//       initialContent={initialContent}
-//     />
-//   );
-// }
-
-
-'use client';
-
+import { getArticleBySlug } from '@/app/lib/articles';
+import { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
-import ArticlePage from '@/app/components/articles/newarticlesContent'; // Assuming ArticlePage is default export
-import InterestingArticles from '../../components/articles/intrestingArticles';
-import { sampleArticle, blogPageFooterLinks } from '@/app/data/data'; // Import data
-import Navbar from '@/app/components/layout/navbar2';
+import dynamic from 'next/dynamic';
 
+// Use dynamic import for client components
+const CommentSection = dynamic(() => import('@/app/components/comments/CommentSection'), {
+});
 
-export default function SingleArticlePage() {
+interface BlogPostParams {
+  params: {
+    slug: string;
+  };
+}
+
+// Generate metadata for the page
+export async function generateMetadata({ params }: BlogPostParams): Promise<Metadata> {
+  const article = await getArticleBySlug(params.slug);
+  
+  if (!article) {
+    return {
+      title: 'Article Not Found',
+      description: 'The requested article could not be found.',
+    };
+  }
+  
+  return {
+    title: article.title,
+    description: article.excerpt,
+    openGraph: {
+      title: article.title,
+      description: article.excerpt,
+      images: [
+        {
+          url: article.cover_image,
+          width: 1200,
+          height: 630,
+          alt: article.title,
+        }
+      ],
+      type: 'article',
+      publishedTime: article.published_at?.toISOString(),
+      modifiedTime: article.updated_at.toISOString(),
+      authors: [article.author_name],
+      tags: article.tags.map(tag => tag.name),
+    },
+  };
+}
+
+export default async function BlogPost({ params }: BlogPostParams) {
+  const slug = params.slug;
+
+  const article = await getArticleBySlug(slug);
+  
+  if (!article) {
+    notFound();
+  }
+
+  const formattedDate = new Date(article.published_at || article.created_at).toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+  
   return (
-    <div className="min-h-screen bg-white text-black">
-      {/* Hero Section */}
-      <section className="relative h-screen">
+    <div className="bg-white text-black">
+      {/* Hero image */}
+      <div className="relative w-full h-[40vh] md:h-[50vh] lg:h-[60vh]">
         <Image
-          src="/images/hero-mother.avif"
-          alt="Article Hero"
+          src={article.cover_image}
+          alt={article.title}
           fill
-          className="object-cover brightness-75"
+          className="object-cover"
+          priority
         />
-        <Navbar/>
-      </section>
-
-      {/* Article Content Overlapping Hero */}
-  <div className="max-w-4xl mx-auto px-4 py-12 -mt-40 relative z-20">
-    <ArticlePage
-      title={sampleArticle.title}
-      date={sampleArticle.date}
-      readingTime={sampleArticle.readingTime}
-      quote={sampleArticle.quote}
-      toc={sampleArticle.toc}
-      initialContent={sampleArticle.initialContent}
-    />
-  </div>
-
-      {/* Related Articles */}
-      <InterestingArticles articles={sampleArticle.relatedArticles} />
-
-      {/* Footer */}
-      <footer className="bg-black text-white py-12">
-        <div className="container mx-auto px-4 text-center">
-          <h3 className="text-xl font-bold mb-4">MomsLove</h3>
-          <p className="text-sm mb-4">Your source for insightful articles and guides.</p>
-          <div className="flex justify-center gap-4">
-            {blogPageFooterLinks.map((link, index) => (
-              <Link key={index} href={link.href} className="hover:underline">
-                {link.label}
-              </Link>
-            ))}
+        <div className="absolute inset-0 bg-black bg-opacity-40"></div>
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="container mx-auto px-6 text-center">
+            <h1 className="text-white text-3xl md:text-4xl lg:text-5xl font-bold max-w-4xl mx-auto leading-tight">
+              {article.title}
+            </h1>
           </div>
         </div>
-      </footer>
+      </div>
+      
+      {/* Article content */}
+      <div className="container mx-auto px-4 py-12">
+        <div className="max-w-3xl mx-auto">
+          {/* Article metadata */}
+          <div className="mb-8 text-center">
+            <p className="text-gray-600">
+              By <span className="font-semibold">{article.author_name}</span> • {formattedDate}
+              {article.reading_time && <> • {article.reading_time} min read</>}
+            </p>
+            <div className="flex flex-wrap justify-center gap-2 mt-4">
+              {article.tags.map((tag) => (
+                <Link 
+                  key={tag.id} 
+                  href={`/tags/${tag.name.toLowerCase().replace(/\s+/g, '-')}`}
+                  className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm hover:bg-gray-200 transition"
+                >
+                  #{tag.name}
+                </Link>
+              ))}
+            </div>
+          </div>
+          
+          {/* Article body */}
+          <div className="prose prose-lg max-w-none">
+            <div dangerouslySetInnerHTML={{ __html: article.content }} />
+          </div>
+          
+          {/* Author info */}
+          <div className="mt-12 p-6 bg-gray-50 rounded-lg">
+            <h3 className="text-xl font-bold mb-2">About the Author</h3>
+            <p>{article.author_name}</p>
+          </div>
+          
+          {/* Comments section */}
+          <div className="mt-12">
+            <CommentSection articleId={article.id} />
+          </div>
+          
+          {/* Related articles placeholder - can be implemented later */}
+        </div>
+      </div>
     </div>
   );
 }

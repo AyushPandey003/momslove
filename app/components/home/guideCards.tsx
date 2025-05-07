@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 const guides = [
     {
       title: "AI Basics",
@@ -39,7 +41,9 @@ const guides = [
                 className="bg-white overflow-hidden shadow-lg hover:shadow-2xl transition duration-300"
               >
                 <div className="relative">
-                  <img
+                  <Image
+                    width={400}
+                    height={300}
                     src={guide.imageUrl}
                     alt={guide.title}
                     className="w-full h-48 object-cover"

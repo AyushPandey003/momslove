@@ -9,7 +9,7 @@ interface ArticleCardProps {
 }
 
 export default function ArticleCard({ article, variant = 'default' }: ArticleCardProps) {
-  const { title, excerpt, coverImage, date, author, slug, category } = article;
+  const { title, excerpt, author, slug, category, date, coverImage } = article;
   
   const isFeatured = variant === 'featured';
   
@@ -48,7 +48,9 @@ export default function ArticleCard({ article, variant = 'default' }: ArticleCar
           )}
           <span>{author?.name || 'Anonymous'}</span>
           <span>•</span>
-          <time dateTime={date}>{format(new Date(date), 'MMMM d, yyyy')}</time>
+          {date && (
+            <time dateTime={new Date(date).toISOString()}>{format(new Date(date), 'MMMM d, yyyy')}</time>
+          )}
         </div>
         
         <h3 className={`font-bold text-gray-900 dark:text-white ${isFeatured ? 'text-2xl mb-3' : 'text-xl mb-2'}`}>

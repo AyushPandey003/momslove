@@ -1,110 +1,70 @@
 import { NextResponse } from 'next/server';
 import { auth } from '@/auth';
-import { Pool } from '@neondatabase/serverless';
+import { approveStory, rejectStory, getStoryById } from '@/app/lib/stories';
 
-// Define a type for the session user, assuming an isAdmin flag might exist
-// Adjust this based on your actual user session structure
-interface AdminSessionUser {
-  id?: string | null;
-  name?: string | null;
-  email?: string | null;
-  image?: string | null;
-  admin?: boolean; // Placeholder for admin check
-}
-
-// Ensure DATABASE_URL is set
-if (!process.env.DATABASE_URL) {
-  throw new Error("Missing DATABASE_URL environment variable");
-}
-
-const pool = new Pool({ connectionString: process.env.DATABASE_URL });
-
-interface PatchParams {
+interface StoryRouteParams {
   params: {
     storyId: string;
   };
 }
 
-// PATCH handler to update story status (approve/reject)
-export async function PATCH(request: Request, { params }: PatchParams) {
+export async function PATCH(
+  request: Request,
+  { params }: StoryRouteParams
+) {
   const session = await auth();
-  const user = session?.user as AdminSessionUser | undefined;
-
-  // --- Admin Access Check ---
-  // Replace this logic with your actual admin identification method
-  const isAdmin = user?.admin === true; // Placeholder check
-  if (!session || !isAdmin) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-  }
-  // --- End Admin Access Check ---
-
   const { storyId } = params;
-  if (!storyId) {
-    return NextResponse.json({ error: 'Story ID is required' }, { status: 400 });
+
+  // 1. Check if user is authenticated and is an admin
+  if (!session?.user || !session.user.admin) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
   try {
-    const { status, rejectionReason } = await request.json();
+    // 2. Parse the request body
+    const body = await request.json();
+    const { status, rejectionReason } = body;
 
-    // Validate status
     if (!status || (status !== 'approved' && status !== 'rejected')) {
-      return NextResponse.json({ error: 'Invalid status provided. Must be "approved" or "rejected".' }, { status: 400 });
+      return NextResponse.json({ error: 'Invalid status provided' }, { status: 400 });
     }
 
-    // Validate rejectionReason if status is 'rejected'
-    if (status === 'rejected' && (typeof rejectionReason !== 'string' || !rejectionReason.trim())) {
-      // Allowing empty rejection reason for now, but could enforce it:
-      // return NextResponse.json({ error: 'Rejection reason is required when rejecting a story.' }, { status: 400 });
+    // 3. Verify the story exists before attempting to update
+    const story = await getStoryById(storyId);
+    if (!story) {
+      return NextResponse.json({ error: 'Story not found' }, { status: 404 });
     }
 
-    const client = await pool.connect();
-    try {
-      let query: string;
-      let values: (string | null)[]; // Use string | null for values passed to DB query
-
-      if (status === 'approved') {
-        query = `
-          UPDATE stories
-          SET status = $1, "approved_at" = CURRENT_TIMESTAMP, "rejected_at" = NULL, "rejection_reason" = NULL
-          WHERE id = $2 AND status = 'pending' -- Ensure we only update pending stories
-          RETURNING id;
-        `;
-        values = [status, storyId];
-      } else { // status === 'rejected'
-        query = `
-          UPDATE stories
-          SET status = $1, "rejected_at" = CURRENT_TIMESTAMP, "approved_at" = NULL, "rejection_reason" = $2
-          WHERE id = $3 AND status = 'pending' -- Ensure we only update pending stories
-          RETURNING id;
-        `;
-        values = [status, rejectionReason || null, storyId]; // Use null if reason is empty/not provided
+    // 4. Update the story based on the status
+    if (status === 'approved') {
+      await approveStory(storyId);
+    } else if (status === 'rejected') {
+      // For rejection, a reason is required
+      if (!rejectionReason || typeof rejectionReason !== 'string' || rejectionReason.trim() === '') {
+        return NextResponse.json({ error: 'Rejection reason is required' }, { status: 400 });
       }
-
-      const result = await client.query(query, values);
-
-      if (result.rowCount === 0) {
-        // Could be because the story wasn't found, or wasn't in 'pending' state
-        // Check if the story exists first for a more specific error message if needed
-        const checkExist = await client.query('SELECT status FROM stories WHERE id = $1', [storyId]);
-        if (checkExist.rowCount === 0) {
-             return NextResponse.json({ error: 'Story not found' }, { status: 404 });
-        } else {
-             return NextResponse.json({ error: `Story is not in pending state (current state: ${checkExist.rows[0].status})` }, { status: 409 }); // Conflict
-        }
-      }
-
-      console.log(`Story ${storyId} status updated to ${status}`);
-      return NextResponse.json({ message: `Story successfully ${status}.`, storyId }, { status: 200 });
-
-    } finally {
-      client.release();
+      await rejectStory(storyId, rejectionReason.trim());
     }
+
+    // 5. Set cache headers for faster subsequent loads
+    const headers = new Headers();
+    headers.set('Cache-Control', 'private, s-maxage=30, stale-while-revalidate=60');
+
+    // 6. Return success response
+    return NextResponse.json(
+      { message: `Story ${status} successfully` },
+      { 
+        status: 200,
+        headers
+      }
+    );
 
   } catch (error) {
-    console.error(`Failed to update story ${storyId}:`, error);
-     if (error instanceof SyntaxError) { // JSON parsing error
-        return NextResponse.json({ error: 'Invalid request body' }, { status: 400 });
-    }
-    return NextResponse.json({ error: 'Failed to update story status' }, { status: 500 });
+    console.error(`Failed to update story:`, error);
+    // Handle potential database errors or other issues
+    return NextResponse.json(
+      { error: 'Failed to update story. Please try again.' },
+      { status: 500 }
+    );
   }
-}
+} 

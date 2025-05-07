@@ -1,5 +1,6 @@
 // components/ProfileCard.jsx
 import React from 'react'
+import Image from 'next/image'
 
 interface ProfileCardProps {
   imageSrc: string;
@@ -30,7 +31,9 @@ export default function ProfileCard({
 
       {/* Profile image overlapping top border */}
       <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-        <img
+        <Image
+          width={96}
+          height={96}
           src={imageSrc}
           alt={name}
           className="w-24 h-24 rounded-full border-4 border-white object-cover shadow-md"

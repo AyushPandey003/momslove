@@ -53,10 +53,10 @@ import {
   PageFooterLink, 
 } from "@/app/types"; 
 import {
-  FaFacebookF,
+
   FaInstagram,
-  FaYoutube,
   FaTwitter,
+  FaLinkedin,
 } from 'react-icons/fa';
 
 
@@ -139,10 +139,9 @@ export const blogPageFooterLinks: PageFooterLink[] = [
 
 
 const homeSocials: SocialLink[] = [
-  { href: 'https://facebook.com/', label: 'Facebook', icon: FaFacebookF },
-  { href: 'https://instagram.com/', label: 'Instagram', icon: FaInstagram },
-  { href: 'https://youtube.com/', label: 'YouTube', icon: FaYoutube },
-  { href: 'https://twitter.com/', label: 'Twitter', icon: FaTwitter },
+  { href: 'https://www.instagram.com/ayush_pandey_2003/', label: 'Instagram', icon: FaInstagram },
+  { href: 'https://twitter.com/AYUSHpa12', label: 'Twitter', icon: FaTwitter },
+  { href: 'https://www.linkedin.com/in/ayushpandey003/', label: 'LinkedIn', icon: FaLinkedin },
 ];
 
 export const homeProfileCard: ProfileCardData = {

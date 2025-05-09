@@ -77,7 +77,7 @@ export default function SubmitStoryPage() {
       <div className="container mx-auto max-w-4xl py-12 px-4">
         <h1 className="text-3xl font-bold mb-8">Submit Your Story</h1>
         <div className="bg-white p-6 rounded-lg shadow-md">
-          <p className="mb-4">You need to be logged in to submit a story.</p>
+          <p className="mb-4 text-black">You need to be logged in to submit a story.</p>
           <button
             onClick={() => router.push('/api/auth/signin')}
             className="px-4 py-2 bg-black text-white rounded-md hover:bg-gray-800 transition"
@@ -121,7 +121,7 @@ export default function SubmitStoryPage() {
             </label>
             <textarea
               id="content"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none text-black focus:ring-2 focus:ring-blue-500"
               rows={10}
               placeholder="Share your story with our community..."
               {...register('content', { 

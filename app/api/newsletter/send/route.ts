@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 import { sendEmail, createNewsletterTemplate } from '@/app/lib/gmail';
 import { getActiveSubscribers, updateLastEmailSent } from '@/app/lib/newsletter';
+import { auth } from '@/auth';
 
 // Schema for newsletter request
 const newsletterSchema = z.object({
@@ -15,6 +16,10 @@ const newsletterSchema = z.object({
  * POST handler for sending newsletter to all subscribers
  */
 export async function POST(request: NextRequest) {
+  const session = await auth();
+  if (!session?.user || !session.user.admin) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
   try {
     const body = await request.json();
     
@@ -66,7 +71,7 @@ export async function POST(request: NextRequest) {
     let failCount = 0;
     
     for (const subscriber of subscribers) {
-      const unsubscribeUrl = `${baseUrl}/unsubscribe?email=${encodeURIComponent(subscriber.email)}`;
+      const unsubscribeUrl = `${baseUrl}/unsubscribe?email=${encodeURIComponent(subscriber.email)}&id=${subscriber.id}`;
       const emailContent = createNewsletterTemplate(subscriber.name || '', content, unsubscribeUrl);
       
       try {

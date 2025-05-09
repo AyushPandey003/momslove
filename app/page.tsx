@@ -1,4 +1,3 @@
-
 import DestinationsCard from "./components/about/destinationsCard";
 import NewsletterCard from "./components/about/newslettercard";
 import WhereToNextCard from "./components/about/wheretonextcard";
@@ -34,7 +33,6 @@ export default function Home() {
   
             <DestinationsCard
               title={homeDestinationsCard.title}
-              items={homeDestinationsCard.items}
             />
   
             <NewsletterCard

@@ -79,7 +79,7 @@ export default function HeroSection() {
           <p className="text-sm sm:text-base text-gray-500 mb-4">
             {posts[currentPost].excerpt}
           </p>
-          <Link href={`/post/${posts[currentPost].id}`}>
+          <Link href={"/approved-stories"}>
             <button className="bg-black text-white px-4 py-2 text-sm hover:bg-gray-800 transition">
               Read more
             </button>

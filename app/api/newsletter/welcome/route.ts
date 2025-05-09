@@ -45,7 +45,7 @@ export async function POST(request: NextRequest) {
     if (!wasAlreadySubscribed) {
       // Generate unsubscribe URL
       const baseUrl = process.env.NEXT_PUBLIC_APP_URL || request.nextUrl.origin;
-      const unsubscribeUrl = `${baseUrl}/unsubscribe?email=${encodeURIComponent(email)}`;
+      const unsubscribeUrl = `${baseUrl}/unsubscribe?email=${encodeURIComponent(email)}&id=${subscriber.id}`;
       
       // Create welcome email content
       const welcomeEmail = createWelcomeTemplate(name || '', unsubscribeUrl);

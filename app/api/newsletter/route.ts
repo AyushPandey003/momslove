@@ -12,6 +12,7 @@ const subscribeSchema = z.object({
 // Schema for unsubscribe request
 const unsubscribeSchema = z.object({
   email: z.string().email('Invalid email address'),
+  id: z.string().min(1, 'Subscriber ID is required'),
 });
 
 /**
@@ -74,14 +75,14 @@ export async function DELETE(request: NextRequest) {
       );
     }
     
-    const { email } = result.data;
+    const { email, id } = result.data;
     
     // Unsubscribe the user
-    const success = await unsubscribeFromNewsletter(email);
+    const success = await unsubscribeFromNewsletter(email, id);
     
     if (!success) {
       return NextResponse.json(
-        { error: 'Failed to unsubscribe or email not found' },
+        { error: 'Failed to unsubscribe or subscriber not found' },
         { status: 404 }
       );
     }

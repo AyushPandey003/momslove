@@ -7,15 +7,16 @@ import Link from 'next/link';
 function UnsubscribeHandler() {
   const searchParams = useSearchParams();
   const email = searchParams.get('email');
+  const id = searchParams.get('id');
 
   const [status, setStatus] = useState<'loading' | 'success' | 'error'>('loading');
   const [message, setMessage] = useState('Processing your request...');
 
   useEffect(() => {
     async function unsubscribe() {
-      if (!email) {
+      if (!email || !id) {
         setStatus('error');
-        setMessage('No email address provided. Please check the URL and try again.');
+        setMessage('Invalid unsubscribe link. Please check the URL and try again.');
         return;
       }
 
@@ -23,7 +24,7 @@ function UnsubscribeHandler() {
         const response = await fetch('/api/newsletter', {
           method: 'DELETE',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email }),
+          body: JSON.stringify({ email, id }),
         });
 
         const data = await response.json();
@@ -43,7 +44,7 @@ function UnsubscribeHandler() {
     }
 
     unsubscribe();
-  }, [email]);
+  }, [email, id]);
 
   return (
     <div className="max-w-md w-full p-8 bg-white shadow-lg rounded-lg">

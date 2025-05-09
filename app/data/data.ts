@@ -154,7 +154,13 @@ export const homeProfileCard: ProfileCardData = {
 
 export const homeDestinationsCard: DestinationsCardData = {
   title: "Popular Topics",
-  items: [ 'Gift Ideas', 'Brunch Recipes', 'DIY Crafts', 'Heartfelt Messages' ], // Updated items
+  items: [
+    'Motherhood Stories',
+    'Parenting Tips',
+    'Self-Care Guide',
+    'Family Activities',
+    'Healthy Recipes'
+  ],
 };
 
 export const homeNewsletterCard: NewsletterCardData = {

@@ -158,24 +158,55 @@ export function createNewsletterTemplate(
   `;
 }
 
-// Welcome template for new subscribers
 export function createWelcomeTemplate(
   subscriberName: string,
   unsubscribeUrl: string
 ): string {
   const content = `
-    <p>Welcome to the MomsLove community!</p>
-    <p>Thank you for subscribing to our newsletter. We're excited to share stories, insights, and updates with you about motherhood and parenting.</p>
-    <p>You'll receive updates about:</p>
-    <ul>
-      <li>New articles and stories</li>
-      <li>Community highlights</li>
-      <li>Tips and resources for mothers</li>
-      <li>Special announcements</li>
-    </ul>
-    <p>Feel free to visit our website anytime to explore more content.</p>
-    <p>Warm regards,<br>The MomsLove Team</p>
+  <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #333; background-color: #fff7f5; padding: 40px; border-radius: 8px; max-width: 600px; margin: auto;">
+    <div style="text-align: center;">
+      <h1 style="color: #d16a7a;">💐 Welcome to MomsLove, ${subscriberName}!</h1>
+      <p style="font-size: 16px; margin-bottom: 20px;">
+        Thank you for joining our heartwarming community dedicated to celebrating motherhood. We're so glad you're here!
+      </p>
+    </div>
+
+    <hr style="border: none; border-top: 1px solid #eecaca; margin: 20px 0;" />
+
+    <div>
+      <p style="font-size: 16px; line-height: 1.6;">
+        As a subscriber, you’ll receive:
+      </p>
+      <ul style="padding-left: 20px; font-size: 16px; line-height: 1.8;">
+        <li>🌸 Inspiring motherhood stories</li>
+        <li>🌼 Weekly parenting tips & resources</li>
+        <li>👩‍👧 Community highlights and featured moms</li>
+        <li>🎉 Exclusive updates & seasonal celebrations</li>
+      </ul>
+    </div>
+
+    <div style="margin-top: 30px; font-size: 16px;">
+      <p>
+        Explore more <a href="https://www.momslove.com" style="color: #d16a7a; text-decoration: underline;">on our website</a> and feel free to share your story with us too.
+      </p>
+      <p style="margin-top: 20px;">
+        With love and gratitude,  
+        <br />
+        <strong>The MomsLove Team</strong>
+      </p>
+    </div>
+
+    <hr style="border: none; border-top: 1px solid #eecaca; margin: 30px 0;" />
+
+    <div style="font-size: 12px; color: #999; text-align: center;">
+      <p>
+        You are receiving this email because you subscribed to MomsLove.
+        <br />
+        <a href="${unsubscribeUrl}" style="color: #d16a7a; text-decoration: none;">Unsubscribe</a> if you no longer wish to receive updates.
+      </p>
+    </div>
+  </div>
   `;
-  
+
   return createNewsletterTemplate(subscriberName, content, unsubscribeUrl);
-} 
+}

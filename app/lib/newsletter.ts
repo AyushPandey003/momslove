@@ -51,16 +51,16 @@ export async function subscribeToNewsletter(
 /**
  * Unsubscribe a user from the newsletter
  */
-export async function unsubscribeFromNewsletter(email: string): Promise<boolean> {
+export async function unsubscribeFromNewsletter(email: string, id: string): Promise<boolean> {
   try {
     const now = new Date();
     
     const result = await query<{ id: string }>(`
       UPDATE newsletter_subscribers
-      SET status = 'unsubscribed', updated_at = $2
-      WHERE email = $1
+      SET status = 'unsubscribed', updated_at = $3
+      WHERE email = $1 AND id = $2
       RETURNING id
-    `, [email, now]);
+    `, [email, id, now]);
     
     return result.length > 0;
   } catch (error) {

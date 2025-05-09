@@ -9,6 +9,9 @@ const MAX_REQUESTS = 60
 
 export async function middleware(request: NextRequest) {
   const session = await auth()
+  if (request.nextUrl.pathname.startsWith("/api/auth")) {
+  return NextResponse.next()
+}
 
   // Optionally block unauthenticated users
   if (!session?.user) {

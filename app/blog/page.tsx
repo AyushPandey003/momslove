@@ -14,14 +14,13 @@ export default async function BlogPage({
 }: { 
   searchParams: { page?: string } 
 }) {
-  // Get page number from query params, default to page 1
+
   const currentPage = searchParams.page ? parseInt(searchParams.page) : 1;
-  const pageSize = 6; // Number of articles per page
+  const pageSize = 6; 
   
   // Get articles
   const allArticles = await getRecentArticles(50); // Fetch more than needed so we can paginate
-  
-  // Filter to only published articles
+
   const publishedArticles = allArticles.filter(
     article => article.status === 'published'
   );

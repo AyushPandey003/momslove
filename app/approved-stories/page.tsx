@@ -2,6 +2,8 @@ import { getStories } from '@/app/lib/stories';
 import Link from 'next/link';
 import { Metadata } from 'next';
 
+export const dynamic = 'force-dynamic'; // Ensure this page is always fresh
+
 export const metadata: Metadata = {
   title: 'Approved Stories | MomsLove',
   description: 'Read the stories shared by our community members.',
@@ -9,6 +11,7 @@ export const metadata: Metadata = {
 
 export default async function ApprovedStoriesPage() {
   const stories = await getStories('approved');
+  console.log('Approved stories:', stories);
 
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16">

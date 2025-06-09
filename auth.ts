@@ -14,14 +14,14 @@ declare module "next-auth" {
     };
   }
 
-  interface AdapterUser {
-    id: number;
-    email: string;
-    name?: string | null;
-    image?: string | null;
-    emailVerified?: Date | null;
-    admin: boolean; // <-- your custom field
-  }
+  // interface AdapterUser {
+  //   id: number;
+  //   email: string;
+  //   name?: string | null;
+  //   image?: string | null;
+  //   emailVerified?: Date | null;
+  //   admin: boolean; // <-- your custom field
+  // }
 
   interface User {
     id: number;

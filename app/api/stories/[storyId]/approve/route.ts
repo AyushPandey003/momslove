@@ -8,7 +8,6 @@ interface ApproveRouteParams {
   };
 }
 
-// Use edge runtime for lower latency
 export const runtime = 'edge';
 
 export async function POST(
@@ -18,26 +17,25 @@ export async function POST(
   const session = await auth();
   const { storyId } = params;
 
-  // 1. Check if user is authenticated and is an admin
   if (!session?.user || !session.user.admin) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
   try {
-    // 2. Verify the story exists before attempting to approve
+ 
     const story = await getStoryById(storyId);
     if (!story) {
       return NextResponse.json({ error: 'Story not found' }, { status: 404 });
     }
 
-    // 3. Approve the story
+   
     await approveStory(storyId);
 
-    // 4. Set cache headers for faster subsequent loads
+
     const headers = new Headers();
     headers.set('Cache-Control', 'private, s-maxage=30, stale-while-revalidate=60');
 
-    // 5. Return success response
+   
     return NextResponse.json(
       { message: 'Story approved successfully' },
       { 

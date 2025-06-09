@@ -7,7 +7,6 @@ import Link from 'next/link';
 import { Suspense } from 'react';
 import dynamic from 'next/dynamic';
 
-// Dynamically import heavy components with loading fallbacks
 const AdminStoryList = dynamic(() => import("@/app/components/dashboard/StoryList"), {
   loading: () => <StoryListSkeleton />,
 });
@@ -15,8 +14,6 @@ const AdminStoryList = dynamic(() => import("@/app/components/dashboard/StoryLis
 const AdminStats = dynamic(() => import("@/app/components/dashboard/AdminStats"), {
   loading: () => <StatsSkeleton />,
 });
-
-// Skeleton loaders for dynamically imported components
 function StoryListSkeleton() {
   return (
     <div className="space-y-4 animate-pulse">

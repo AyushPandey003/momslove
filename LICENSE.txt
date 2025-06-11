@@ -1,0 +1,12 @@
+MIT License - Attribution Required
+
+Copyright (c) Ayushpandey003
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to use, copy, modify, merge, publish, distribute, sublicense, and sell copies of the Software, **provided that proper credit is given** to the original author. 
+
+THE FOLLOWING CONDITIONS APPLY:
+1. **Attribution Required** – Any redistribution, modification, or use of this code **must include a link to the original repository** and credit the author.
+2. **No Misrepresentation** – The original author **must not be removed** from history or commit logs.
+3. **No Liability** – The software is provided "as is", without warranty of any kind, express or implied.
+
+By using this software, you agree to the above terms.

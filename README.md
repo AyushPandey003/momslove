@@ -100,7 +100,8 @@ For the profile image upload functionality to work, you need to set up UploadThi
 UPLOADTHING_SECRET=your-uploadthing-secret
 UPLOADTHING_APP_ID=your-uploadthing-app-id
 ```
-
+---
+🚨 **Attribution Required**: Any use of this code **must** credit Ayushpandey003 and link to this repository.
 ---
 
 Made with ❤️ for celebrating mothers everywhere.
